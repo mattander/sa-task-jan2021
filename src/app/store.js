@@ -1,10 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit';
-import counterReducer from '../features/counter/counterSlice';
-import { cryptoListSlice } from '../features/cryptoList/cryptoListSlice';
+import { currenciesSlice } from '../features/currencies/currenciesSlice';
 
 export default configureStore({
-	reducer: {
-		counter: counterReducer,
-		cryptoList: cryptoListSlice.reducer,
-	},
+    reducer: {
+        currencies: currenciesSlice.reducer,
+    },
 });
