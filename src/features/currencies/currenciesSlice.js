@@ -4,9 +4,11 @@ import axios from 'axios';
 export const getCurrenciesList = createAsyncThunk(
     'currencies/getList',
     async () => {
-        const { data, status } = await axios.get(
-            'https://www.stackadapt.com/coinmarketcap/map'
-        );
+        const { data, status } = await axios
+            .get('https://www.stackadapt.com/coinmarketcap/map?sort=cmc_rank')
+            .catch((err) => {
+                console.error('Error while fetching available currencies');
+            });
         return { data, status };
     }
 );
