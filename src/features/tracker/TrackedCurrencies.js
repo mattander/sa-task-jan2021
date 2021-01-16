@@ -1,7 +1,11 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCurrencyMeta } from '../currencies/currenciesSlice';
-import { getTrackedCurrencies, getTrackedCurrencyQuotes } from './trackerSlice';
+import {
+	debouncedAction,
+	getTrackedCurrencies,
+	getTrackedCurrencyQuotes,
+} from './trackerSlice';
 import { TrackedCurrency } from './TrackedCurrency';
 
 export function TrackedCurrencies({ currencies }) {
@@ -24,10 +28,10 @@ export function TrackedCurrencies({ currencies }) {
 
 	useEffect(() => {
 		if (Object.keys(trackedCurrencies).length > 0) {
-			dispatch(getTrackedCurrencyQuotes());
+			// We use the debounce action to make sure we don't spam the server
+			dispatch(debouncedAction(getTrackedCurrencyQuotes()));
 		}
 	}, [dispatch, trackedCurrencies]);
-
 	return (
 		<div className='row'>
 			<div className='col-12 col-md-8'>

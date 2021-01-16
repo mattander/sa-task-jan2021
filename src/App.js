@@ -42,7 +42,6 @@ function App() {
 		<div className='App'>
 			<div className='container'>
 				<TrackedCurrencies currencies={currencies} />
-
 				<h2>Untracked currencies</h2>
 				<CurrencyList currencies={currencies} />
 			</div>

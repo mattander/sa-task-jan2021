@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { debounce } from 'lodash';
 
 export const getTrackedCurrencyQuotes = createAsyncThunk(
 	'tracker/updateQuotes',
@@ -19,6 +20,16 @@ export const getTrackedCurrencyQuotes = createAsyncThunk(
 			});
 		return { data, status };
 	}
+);
+
+// I think it may be useful to be able to debounce other actions
+// I might move this to a more generic place like the global level of the store
+// I'd need to do more research
+export const debouncedAction = createAsyncThunk(
+	'debouncedAction',
+	debounce(async (action, { dispatch }) => {
+		dispatch(action);
+	}, 500)
 );
 
 export const trackerSlice = createSlice({

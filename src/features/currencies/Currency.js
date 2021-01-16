@@ -1,6 +1,5 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { getTrackedCurrencyQuotes } from '../tracker/trackerSlice';
 
 export function Currency({ currency, disabled, index, tracked }) {
 	const dispatch = useDispatch();
@@ -15,8 +14,6 @@ export function Currency({ currency, disabled, index, tracked }) {
 				},
 			],
 		});
-
-		dispatch(getTrackedCurrencyQuotes(tracked));
 	};
 
 	const classes = [];

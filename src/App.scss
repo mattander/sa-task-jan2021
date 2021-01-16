@@ -1,8 +1,13 @@
 @import '../node_modules/bootstrap/scss/bootstrap.scss';
 
 .currencies-list {
-    max-height: 400px;
-    width: 300px;
-    overflow-y: scroll;
-    background: #fafafa;
+	max-height: 400px;
+	width: 300px;
+	overflow-y: scroll;
+
+	ul {
+		list-style-type: none;
+
+		padding-left: 0;
+	}
 }

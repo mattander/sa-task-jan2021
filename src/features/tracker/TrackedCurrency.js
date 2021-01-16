@@ -21,7 +21,6 @@ export function TrackedCurrency({ currency, index, disabled }) {
 	return (
 		<tr>
 			<td>
-				{' '}
 				<button
 					title={`Remove ${currency.name} from tracking list`}
 					disabled={disabled}
