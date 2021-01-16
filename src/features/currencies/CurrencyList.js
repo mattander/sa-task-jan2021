@@ -16,13 +16,5 @@ export function CurrencyList({ currencies }) {
 		/>
 	));
 
-	return (
-		<div className='row'>
-			<div className='col-12 col-md-8'>
-				<div className='currencies-list'>
-					<ul className='currency-list'>{listItems}</ul>
-				</div>
-			</div>
-		</div>
-	);
+	return <ul>{listItems}</ul>;
 }

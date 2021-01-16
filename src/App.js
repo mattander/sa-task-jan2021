@@ -7,6 +7,7 @@ import {
 } from './features/currencies/currenciesSlice';
 import { CurrencyList } from './features/currencies/CurrencyList';
 import { TrackedCurrencies } from './features/tracker/TrackedCurrencies';
+import Dropdown from 'react-bootstrap/Dropdown';
 
 function App() {
 	const dispatch = useDispatch();
@@ -41,9 +42,28 @@ function App() {
 	return (
 		<div className='App'>
 			<div className='container'>
-				<TrackedCurrencies currencies={currencies} />
-				<h2>Untracked currencies</h2>
-				<CurrencyList currencies={currencies} />
+				<h1>Cryptocurrency tracker</h1>
+				<div className='row'>
+					<div className='col-12 col-md-8 col-lg-7'>
+						<div className='d-flex justify-content-end my-2'>
+							<Dropdown className='currencies-dropdown'>
+								<Dropdown.Toggle
+									variant='primary'
+									id='currencyListDropdown'
+								>
+									Add currencies
+								</Dropdown.Toggle>
+								<Dropdown.Menu>
+									<Dropdown.Header>
+										Available currencies
+									</Dropdown.Header>
+									<CurrencyList currencies={currencies} />
+								</Dropdown.Menu>
+							</Dropdown>
+						</div>
+						<TrackedCurrencies currencies={currencies} />
+					</div>
+				</div>
 			</div>
 		</div>
 	);

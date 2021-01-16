@@ -32,25 +32,19 @@ export function TrackedCurrencies({ currencies }) {
 			dispatch(debouncedAction(getTrackedCurrencyQuotes()));
 		}
 	}, [dispatch, trackedCurrencies]);
+
 	return (
-		<div className='row'>
-			<div className='col-12 col-md-8'>
-				<div className='tracked-currencies'>
-					<h2>Tracked currencies</h2>
-					<table>
-						<thead>
-							<tr>
-								<th></th>
-								<th>Name</th>
-								<th>Symbol</th>
-								<th>CMC Rank</th>
-								<th>Price (USD)</th>
-							</tr>
-						</thead>
-						<tbody>{rows}</tbody>
-					</table>
-				</div>
-			</div>
-		</div>
+		<table className='tracker-table table table-striped table-borderless'>
+			<thead>
+				<tr>
+					<th></th>
+					<th>Name</th>
+					<th>Symbol</th>
+					<th>CMC Rank</th>
+					<th>Price (USD)</th>
+				</tr>
+			</thead>
+			<tbody>{rows}</tbody>
+		</table>
 	);
 }

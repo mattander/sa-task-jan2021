@@ -1,6 +1,8 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getQuotes } from './trackerSlice';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faMinusCircle } from '@fortawesome/free-solid-svg-icons';
 
 export function TrackedCurrency({ currency, index, disabled }) {
 	const dispatch = useDispatch();
@@ -18,15 +20,19 @@ export function TrackedCurrency({ currency, index, disabled }) {
 		});
 	};
 
+	const buttonClasses = ['tracker-button', 'text-danger'];
+	if (disabled) buttonClasses.push('disabled');
+
 	return (
 		<tr>
 			<td>
 				<button
 					title={`Remove ${currency.name} from tracking list`}
+					className={buttonClasses.join(' ')}
 					disabled={disabled}
 					onClick={handleClick}
 				>
-					Remove
+					<FontAwesomeIcon icon={faMinusCircle} />
 				</button>
 			</td>
 			<td>{currency.name}</td>
