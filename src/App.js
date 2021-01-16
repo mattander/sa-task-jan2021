@@ -39,31 +39,58 @@ function App() {
 		}
 	}, [dispatch, currencies]);
 
+	const tryAgainClick = () => {
+		dispatch(getCurrenciesList());
+	};
+
+	const mainView =
+		currencies.status !== 'failed' ? (
+			<div className='row'>
+				<div className='col-12 col-md-8 col-lg-7'>
+					<div className='d-flex justify-content-end my-2'>
+						<Dropdown className='currencies-dropdown'>
+							<Dropdown.Toggle
+								variant='primary'
+								id='currencyListDropdown'
+							>
+								Add currencies
+							</Dropdown.Toggle>
+							<Dropdown.Menu>
+								<Dropdown.Header>
+									Available currencies
+								</Dropdown.Header>
+								<CurrencyList />
+							</Dropdown.Menu>
+						</Dropdown>
+					</div>
+					<TrackedCurrencies />
+				</div>
+			</div>
+		) : (
+			<div className='row'>
+				<div className='col'>
+					<div className='alert alert-danger' role='alert'>
+						<p>
+							Uh oh. Something went wrong when fetching the list
+							of trackable currencies.
+						</p>
+						<p>You can try again now or come back later.</p>
+						<button
+							className='btn btn-primary mt-2'
+							onClick={tryAgainClick}
+						>
+							Try again
+						</button>
+					</div>
+				</div>
+			</div>
+		);
+
 	return (
 		<div className='App'>
 			<div className='container'>
 				<h1>Cryptocurrency tracker</h1>
-				<div className='row'>
-					<div className='col-12 col-md-8 col-lg-7'>
-						<div className='d-flex justify-content-end my-2'>
-							<Dropdown className='currencies-dropdown'>
-								<Dropdown.Toggle
-									variant='primary'
-									id='currencyListDropdown'
-								>
-									Add currencies
-								</Dropdown.Toggle>
-								<Dropdown.Menu>
-									<Dropdown.Header>
-										Available currencies
-									</Dropdown.Header>
-									<CurrencyList currencies={currencies} />
-								</Dropdown.Menu>
-							</Dropdown>
-						</div>
-						<TrackedCurrencies currencies={currencies} />
-					</div>
-				</div>
+				{mainView}
 			</div>
 		</div>
 	);

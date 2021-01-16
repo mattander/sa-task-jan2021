@@ -20,8 +20,13 @@ export function TrackedCurrency({ currency, index, disabled }) {
 		});
 	};
 
-	const buttonClasses = ['tracker-button', 'text-danger'];
-	if (disabled) buttonClasses.push('disabled');
+	const buttonClasses = ['tracker-button'];
+	if (disabled) {
+		buttonClasses.push('disabled');
+		buttonClasses.push('text-muted');
+	} else {
+		buttonClasses.push('text-danger');
+	}
 
 	return (
 		<tr>

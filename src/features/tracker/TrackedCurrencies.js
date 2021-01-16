@@ -8,7 +8,7 @@ import {
 } from './trackerSlice';
 import { TrackedCurrency } from './TrackedCurrency';
 
-export function TrackedCurrencies({ currencies }) {
+export function TrackedCurrencies() {
 	const dispatch = useDispatch();
 	const metaData = useSelector(getCurrencyMeta);
 	const trackedCurrencies = useSelector(getTrackedCurrencies);
@@ -34,17 +34,24 @@ export function TrackedCurrencies({ currencies }) {
 	}, [dispatch, trackedCurrencies]);
 
 	return (
-		<table className='tracker-table table table-striped table-borderless'>
-			<thead>
-				<tr>
-					<th></th>
-					<th>Name</th>
-					<th>Symbol</th>
-					<th>CMC Rank</th>
-					<th>Price (USD)</th>
-				</tr>
-			</thead>
-			<tbody>{rows}</tbody>
-		</table>
+		<div className='tracker-table-container'>
+			<table className='tracker-table table table-striped table-borderless'>
+				<thead>
+					<tr>
+						<th></th>
+						<th>Name</th>
+						<th>Symbol</th>
+						<th>CMC Rank</th>
+						<th>Price (USD)</th>
+					</tr>
+				</thead>
+				<tbody>{rows}</tbody>
+			</table>
+			{Object.keys(trackedCurrencies).length < 2 ? (
+				<div className='text-danger mb-2'>
+					You can't track less than one currency at a time.
+				</div>
+			) : null}
+		</div>
 	);
 }

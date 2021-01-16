@@ -72,6 +72,9 @@ export const trackerSlice = createSlice({
 			// Update loading
 			state.loading = 'idle';
 		},
+		[getTrackedCurrencyQuotes.rejected]: (state) => {
+			state.status = 'failed';
+		},
 	},
 });
 

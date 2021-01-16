@@ -38,6 +38,9 @@ export const currenciesSlice = createSlice({
 			// Update loading
 			state.loading = 'idle';
 		},
+		[getCurrenciesList.rejected]: (state) => {
+			state.status = 'failed';
+		},
 	},
 });
 

@@ -21,8 +21,13 @@ export function Currency({ currency, disabled, index, tracked }) {
 	const listItemClasses = [];
 	if (tracked.hasOwnProperty(currency.id)) listItemClasses.push('d-none');
 
-	const buttonClasses = ['tracker-button', 'text-success'];
-	if (disabled) buttonClasses.push('disabled');
+	const buttonClasses = ['tracker-button'];
+	if (disabled) {
+		buttonClasses.push('disabled');
+		buttonClasses.push('text-muted');
+	} else {
+		buttonClasses.push('text-success');
+	}
 
 	return (
 		<li className={listItemClasses.join(' ')}>
@@ -31,6 +36,7 @@ export function Currency({ currency, disabled, index, tracked }) {
 				disabled={disabled}
 				className={buttonClasses.join(' ')}
 				onClick={handleClick}
+				aria-label={`Track ${currency.name}`}
 			>
 				<FontAwesomeIcon icon={faPlusCircle} />
 			</button>
