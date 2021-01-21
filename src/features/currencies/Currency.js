@@ -4,43 +4,40 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 
 export function Currency({ currency, disabled, index, tracked }) {
-	const dispatch = useDispatch();
+    const dispatch = useDispatch();
 
-	const handleClick = () => {
-		dispatch({
-			type: 'tracker/add',
-			currencies: [
-				{
-					id: currency.id,
-					index,
-				},
-			],
-		});
-	};
+    const handleClick = () => {
+        dispatch({
+            type: 'tracker/add',
+            currencies: [currency],
+        });
+    };
 
-	const listItemClasses = [];
-	if (tracked.hasOwnProperty(currency.id)) listItemClasses.push('d-none');
+    const listItemClasses = [];
 
-	const buttonClasses = ['tracker-button'];
-	if (disabled) {
-		buttonClasses.push('disabled');
-		buttonClasses.push('text-muted');
-	} else {
-		buttonClasses.push('text-success');
-	}
+    if (tracked.filter(({ id }) => currency.id === id).length !== 0)
+        listItemClasses.push('d-none');
 
-	return (
-		<li className={listItemClasses.join(' ')}>
-			<button
-				title={`Add ${currency.name} to tracking list`}
-				disabled={disabled}
-				className={buttonClasses.join(' ')}
-				onClick={handleClick}
-				aria-label={`Track ${currency.name}`}
-			>
-				<FontAwesomeIcon icon={faPlusCircle} />
-			</button>
-			{currency.name} ({currency.symbol})
-		</li>
-	);
+    const buttonClasses = ['tracker-button'];
+    if (disabled) {
+        buttonClasses.push('disabled');
+        buttonClasses.push('text-muted');
+    } else {
+        buttonClasses.push('text-success');
+    }
+
+    return (
+        <li className={listItemClasses.join(' ')}>
+            <button
+                title={`Add ${currency.name} to tracking list`}
+                disabled={disabled}
+                className={buttonClasses.join(' ')}
+                onClick={handleClick}
+                aria-label={`Track ${currency.name}`}
+            >
+                <FontAwesomeIcon icon={faPlusCircle} />
+            </button>
+            {currency.name} ({currency.symbol})
+        </li>
+    );
 }
