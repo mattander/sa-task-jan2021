@@ -39,6 +39,10 @@ export const trackerSlice = createSlice({
         loading: 'idle',
         tracked: {},
         status: null,
+        sort: {
+            type: 'CMC Rank',
+            asc: true,
+        },
     },
     reducers: {
         add: (state, { currencies }) => {
@@ -50,6 +54,9 @@ export const trackerSlice = createSlice({
             currencies.forEach(({ id }) => {
                 delete state.tracked[id];
             });
+        },
+        changeSort: (state, { sort }) => {
+            state.sort = sort;
         },
     },
     extraReducers: {
@@ -74,5 +81,41 @@ export const trackerSlice = createSlice({
     },
 });
 
-export const getTrackedCurrencies = (state) => state.tracker.tracked;
-export const getQuotes = (state) => state.tracker.quotes;
+export const getTrackedCurrencies = (state) => {
+    return Object.values(state.tracker.tracked).sort((a, b) => {
+        switch (state.tracker.sort.type) {
+            case 'Name': {
+                if (a.name < b.name) {
+                    return state.tracker.sort.asc ? -1 : 1;
+                }
+                if (a.name > b.name) {
+                    return state.tracker.sort.asc ? 1 : -1;
+                }
+
+                return 0;
+            }
+            case 'Symbol': {
+                if (a.symbol < b.symbol) {
+                    return state.tracker.sort.asc ? -1 : 1;
+                }
+                if (a.symbol > b.symbol) {
+                    return state.tracker.sort.asc ? 1 : -1;
+                }
+
+                return 0;
+            }
+            case 'Price (USD)': {
+                return state.tracker.sort.asc
+                    ? a.quote.USD.price - b.quote.USD.price
+                    : b.quote.USD.price - a.quote.USD.price;
+            }
+            default: {
+                // Rank
+                return state.tracker.sort.asc
+                    ? a.rank - b.rank
+                    : b.rank - a.rank;
+            }
+        }
+    });
+};
+export const getSort = (state) => state.tracker.sort;

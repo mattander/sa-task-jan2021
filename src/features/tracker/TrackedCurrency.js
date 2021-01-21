@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMinusCircle } from '@fortawesome/free-solid-svg-icons';
+import { debouncedAction, getTrackedCurrencyQuotes } from './trackerSlice';
 
 export function TrackedCurrency({ currency, disabled }) {
     const dispatch = useDispatch();
@@ -16,6 +17,11 @@ export function TrackedCurrency({ currency, disabled }) {
             ],
         });
     };
+
+    useEffect(() => {
+        // We use the debounce action to make sure we don't spam the server
+        dispatch(debouncedAction(getTrackedCurrencyQuotes()));
+    }, [dispatch]);
 
     const buttonClasses = ['tracker-button'];
     if (disabled) {
