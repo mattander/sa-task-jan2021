@@ -5,6 +5,7 @@ import { debounce } from 'lodash';
 export const getTrackedCurrencyQuotes = createAsyncThunk(
     'tracker/updateQuotes',
     async (args, { getState }) => {
+        console.log('quotes xhr');
         const state = getState();
         const { data, status } = await axios
             .get(
@@ -37,22 +38,17 @@ export const trackerSlice = createSlice({
     initialState: {
         loading: 'idle',
         tracked: {},
-        quotes: {},
         status: null,
     },
     reducers: {
         add: (state, { currencies }) => {
-            currencies.forEach(({ id, index }) => {
-                state.tracked[id] = {
-                    metaIndex: index,
-                    quotes: [],
-                };
+            currencies.forEach((currency) => {
+                state.tracked[currency.id] = currency;
             });
         },
         remove: (state, { currencies }) => {
-            currencies.forEach(({ id, index }) => {
+            currencies.forEach(({ id }) => {
                 delete state.tracked[id];
-                delete state.quotes[id];
             });
         },
     },
@@ -62,8 +58,8 @@ export const trackerSlice = createSlice({
         },
         [getTrackedCurrencyQuotes.fulfilled]: (state, { payload }) => {
             // Update the tracked quotes
-            Object.entries(payload.data.data).forEach(([id, quote]) => {
-                state.quotes[id] = quote;
+            Object.entries(payload.data.data).forEach(([id, { quote }]) => {
+                state.tracked[id].quote = quote;
             });
 
             // Store the status in case we need it
